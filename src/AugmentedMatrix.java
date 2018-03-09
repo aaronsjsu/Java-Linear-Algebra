@@ -20,6 +20,7 @@ public class AugmentedMatrix extends Matrix {
 		super(augmentedMatrix);
 	}
 
+	
 	/**
 	 * Checks if a given array, in this case a row or a column, is made up of all zeros.
 	 * 
@@ -34,6 +35,7 @@ public class AugmentedMatrix extends Matrix {
 		}
 		return true;
 	}
+	
 	
 	/**
 	 * Checks if the rest of a given array starting from an index is made up of all zeros.
@@ -50,6 +52,7 @@ public class AugmentedMatrix extends Matrix {
 		}
 		return true;
 	}
+	
 	
 	/**
 	 * Checks if a row in a matrix is invalid. This tests if the row is made up of zeros except
@@ -71,6 +74,7 @@ public class AugmentedMatrix extends Matrix {
 		return false;
 	}
 	
+	
 	/**
 	 * This moves a row to the bottom of a matrix.
 	 * 
@@ -81,7 +85,7 @@ public class AugmentedMatrix extends Matrix {
 	public double[][] moveRowToBottom(double[][] matrix, int row) {
 		if (row >= matrix.length) {
 			throw new IllegalArgumentException("Row does not exist");
-		} else if (row == matrix.length - 1) { //Checks if row is already at the bottom of matrix.
+		} else if (row == matrix.length - 1) { // Checks if row is already at the bottom of matrix.
 			return matrix;
 		}
 		double[] rowToMove = matrix[row];
@@ -93,6 +97,7 @@ public class AugmentedMatrix extends Matrix {
 		}
 		return matrix;
 	}
+	
 	
 	/**
 	 * This method scales a row so that it's leading number is a 1.
@@ -113,6 +118,7 @@ public class AugmentedMatrix extends Matrix {
 		return row;
 	}
 	
+	
 	/**
 	 * This method switches two rows with each other. In linear algebra, this is
 	 * a row operation that is written like: rowX <-> rowY.
@@ -132,6 +138,7 @@ public class AugmentedMatrix extends Matrix {
 		return matrix;
 	}
 
+	
 	/**
 	 * This method takes a row, multiplies it by some factor, and then adds it to 
 	 * another row in order to transform that other row. In linear algebra, this 
@@ -144,14 +151,15 @@ public class AugmentedMatrix extends Matrix {
 	 * @return Returns the edited matrix.
 	 */
 	public double[][] rowAddition(double[][] matrix, int rowX, int rowY, double scalar) {
-		if (rowX >= matrix.length || rowY >= matrix.length) { //Checks if rowX/rowY are bigger than matrix size
+		if (rowX >= matrix.length || rowY >= matrix.length) { // Checks if rowX/rowY are bigger than matrix size
 			throw new IllegalArgumentException("Row does not exist");
 		}
 		for (int i = 0; i < matrix[0].length; i++) {
-			matrix[rowY][i] += matrix[rowX][i] * scalar; //(scalar)rowX + rowY -> rowY
+			matrix[rowY][i] += matrix[rowX][i] * scalar; // (scalar)rowX + rowY -> rowY
 		}
 		return matrix;
 	}
+	
 	
 	/**
 	 * This method reduces the matrix into reduced row echelon form using the 
@@ -164,65 +172,66 @@ public class AugmentedMatrix extends Matrix {
 	public double[][] getReducedMatrix() {
 		double[][] matrix = super.getMatrix();
 		double[][] reducedMatrix = new double[matrix.length][];
-		for (int i = 0; i < matrix.length; i ++) { //This is to make a clone of the matrix and call it reducedMatrix
-			reducedMatrix[i] = matrix[i].clone();  //so that this method doesn't edit the original matrix.
+		for (int i = 0; i < matrix.length; i ++) { // This is to make a clone of the matrix and call it reducedMatrix
+			reducedMatrix[i] = matrix[i].clone();  // so that this method doesn't edit the original matrix.
 		}
-		int rowsOfZero = 0; //Keeps track of how many rows of all zeros there are
-		int nonPivotColumns = 0; //Keeps track of columns without pivots
+		int rowsOfZero = 0; // Keeps track of how many rows of all zeros there are
+		int nonPivotColumns = 0; // Keeps track of columns without pivots
 		
-		for (int i = 0; i < reducedMatrix[0].length - 1; i++) { //Loops through each column except very last
+		for (int i = 0; i < reducedMatrix[0].length - 1; i++) { // Loops through each column except very last
 			
-			double[] column = super.getColumn(reducedMatrix, i); //Gets the current column
-			if (this.arrayIsZero(column) || restOfArrayIsZero(column, i)) { //Handles non pivot columns
-				//nonPivotColumns++;
+			double[] column = super.getColumn(reducedMatrix, i); // Gets the current column
+			if (this.arrayIsZero(column) || restOfArrayIsZero(column, i)) { // Handles non pivot columns
+				// nonPivotColumns++;
 				continue;
 			} 
 			
-			for (int j = 0; j < reducedMatrix.length; j++) { //Loops through each row
+			for (int j = 0; j < reducedMatrix.length; j++) { // Loops through each row
 				
-				double[] row = super.getRow(reducedMatrix, j); //Gets the current row
-				double value = reducedMatrix[j][i]; //Current value
-				if (i == j + nonPivotColumns) { //Handles a pivot coordinate
-					if (value != 0) { //Handles a found pivot
-						reducedMatrix[j] = this.rowScale(row, value); //Replaces row with edited row
-						for (int k = 0; k < j; k++) { //Now that the pivot value is found, make all values above it in the column equal zero
+				double[] row = super.getRow(reducedMatrix, j); // Gets the current row
+				double value = reducedMatrix[j][i]; // Current value
+				if (i == j + nonPivotColumns) { // Handles a pivot coordinate
+					if (value != 0) { // Handles a found pivot
+						reducedMatrix[j] = this.rowScale(row, value); // Replaces row with edited row
+						for (int k = 0; k < j; k++) { // Now that the pivot value is found, make all values above it in the column equal zero
 							double currentValue = reducedMatrix[k][i];
-							if (currentValue != 0) { //Makes value equal to zero if not already
-								reducedMatrix = this.rowAddition(reducedMatrix, j, k, -currentValue); //Adds pivot row to make value equal zero
+							if (currentValue != 0) { // Makes value equal to zero if not already
+								reducedMatrix = this.rowAddition(reducedMatrix, j, k, -currentValue); // Adds pivot row to make value equal zero
 							}
 						}
 					} else {
 						for (int k = j; k < column.length; k++) {
-							if (column[k] != 0) { //Find next non zero value in column
-								reducedMatrix = this.rowInterchange(reducedMatrix, j, k); //Switch current row with row with non zero value
-								j -= 1; //Return to same row on next loop
+							if (column[k] != 0) { // Find next non zero value in column
+								reducedMatrix = this.rowInterchange(reducedMatrix, j, k); // Switch current row with row with non zero value
+								j -= 1; // Return to same row on next loop
 							}
 						}
 					}
-				} else if (i < j + nonPivotColumns) { //Handles values below the pivot in the column
-					if (value != 0) { //Makes value equal to zero if not already
-						reducedMatrix = this.rowAddition(reducedMatrix, i + nonPivotColumns, j, -value); //Adds pivot row to current row to make value equal zero
+				} else if (i < j + nonPivotColumns) { // Handles values below the pivot in the column
+					if (value != 0) { // Makes value equal to zero if not already
+						reducedMatrix = this.rowAddition(reducedMatrix, i + nonPivotColumns, j, -value); // Adds pivot row to current row to make value equal zero
 					}
 				}
 			}
 		}
 		
-		for (int i = 0; i < reducedMatrix.length; i++) { //This is to move all rows of zeros to the bottom
-			for (int j = 0; j < reducedMatrix[0].length; j++) { //This is to get rid of -0.0 in the matrix
-				if (reducedMatrix[i][j] == 0 || Math.abs(reducedMatrix[i][j]) < .000001) { //Gets rid of -0.0 and values less than .000001
+		for (int i = 0; i < reducedMatrix.length; i++) { // This is to move all rows of zeros to the bottom
+			for (int j = 0; j < reducedMatrix[0].length; j++) { // This is to get rid of -0.0 in the matrix
+				if (Math.abs(reducedMatrix[i][j]) < .0000001) { // Gets rid of -0.0 and very small values (less than .0000001)
 					reducedMatrix[i][j] = 0; 
 				}
 			}
 			double[] row = super.getRow(reducedMatrix, i);
 			if (this.arrayIsZero(row) && i <= reducedMatrix.length - 1 - rowsOfZero) {
 				reducedMatrix = this.moveRowToBottom(reducedMatrix, i);
-				rowsOfZero++; //Increment counter
-				i--; //Return to same row on next loop
+				rowsOfZero++; // Increment counter
+				i--; // Return to same row on next loop
 			}
 		}
 		
 		return reducedMatrix;
 	}
+	
 	
 	/**
 	 * Prints out a reduced matrix in an easily readable format.

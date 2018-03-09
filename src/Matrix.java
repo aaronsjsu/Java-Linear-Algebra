@@ -13,6 +13,7 @@ public class Matrix {
 	
 	private double[][] matrix;
 	
+	
 	/**
 	 * Constructs a matrix object.
 	 * 
@@ -21,6 +22,7 @@ public class Matrix {
 	public Matrix(double[][] matrix) {
 		this.matrix = matrix;
 	}
+	
 	
 	/**
 	 * Returns the matrix that belongs to the object.
@@ -31,6 +33,7 @@ public class Matrix {
 		return matrix;
 	}
 	
+	
 	/**
 	 * Sets the matrix to equal a new matrix.
 	 * 
@@ -39,6 +42,7 @@ public class Matrix {
 	public void setMatrix(double[][] matrix) {
 		this.matrix = matrix;
 	}
+	
 	
 	/**
 	 * Gets a value in the matrix at location row, col.
@@ -54,6 +58,7 @@ public class Matrix {
 		return matrix[row][col];
 	}
 	
+	
 	/**
 	 * Sets a value in the matrix at location row, col.
 	 * 
@@ -67,6 +72,7 @@ public class Matrix {
 		}
 		matrix[row][col] = value;
 	}
+	
 	
 	/**
 	 * This method returns the whole column in a given matrix.
@@ -86,6 +92,7 @@ public class Matrix {
 		return column;
 	}
 	
+	
 	/**
 	 * This method returns the whole row in a given matrix.
 	 * 
@@ -97,8 +104,32 @@ public class Matrix {
 		if (rowNumber >= matrix.length) {
 			throw new IllegalArgumentException("Column " + rowNumber + " does not exist");
 		}
-		return matrix[rowNumber].clone(); //Returns a new array by cloning the original
+		return matrix[rowNumber].clone(); // Returns a new array by cloning the original
 	}
+	
+	
+	/**
+	 * This multiplies the matrix by a vector, and returns the resulting vector as a double[].
+	 * 
+	 * @param v Vector to multiply by the matrix.
+	 * @return The resulting vector as a double[]
+	 */
+	public double[] multiplyBy(Vector v) {
+		if (this.matrix[0].length != v.getVector().length) {
+			throw new IllegalArgumentException("Number of columns in matrix != number of rows in vector");
+		}
+		double[] result = new double[this.matrix.length];
+		double value = 0;
+		for (int i = 0; i < this.matrix.length; i++) {
+			for (int j = 0; j < this.matrix[0].length; j++) {
+				value += matrix[i][j] * v.getVector()[j];
+			}
+			result[i] = value;
+			value = 0;
+		}
+		return result;
+	}
+	
 	
 	/**
 	 * This prints the given matrix in an easily readable format.
@@ -112,6 +143,7 @@ public class Matrix {
 		}
 		System.out.println(" ----- ");
 	}
+	
 	
 	/**
 	 * Overloads printMatrix() method to allow for printing without providing an argument.
