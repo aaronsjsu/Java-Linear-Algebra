@@ -163,5 +163,21 @@ public class LinearAlgebraTester  {
 		v3.printVector(new double[] {10, 28, 46});
 		*/
 		
+		/*
+		System.out.println("---");
+		// Tests Matrix multiplyBy() method
+		Matrix m1 = new Matrix(new double[][] {{3,4,2}});
+		Matrix m2 = new Matrix(new double[][] {{13,9,7,15},{8,7,4,6},{6,4,0,3}});
+		System.out.println("Got: ");
+		m1.printMatrix(m1.multiplyBy(m2));
+		System.out.println("Expected: ");
+		m1.printMatrix(new double[][] {{83,63,37,75}});
+		m1.setMatrix(new double[][] {{-1,2,1},{0,3,-2}});
+		m2.setMatrix(new double[][] {{3,4},{1,-1},{-1,2}});
+		System.out.println("Got: ");
+		m1.printMatrix(m1.multiplyBy(m2));
+		System.out.println("Expected: ");
+		m1.printMatrix(new double[][] {{-2,-4},{5,-7}});
+		*/
 	}	
 }

@@ -132,6 +132,33 @@ public class Matrix {
 	
 	
 	/**
+	 * This multiplies the matrix by another matrix, and returns the resulting matrix as a double[][].
+	 * Note that the number of columns in the first matrix has to equal the number of rows in the second matrix.
+	 * 
+	 * @param m Other matrix to multiply by.
+	 * @return The resulting matrix as a double[][].
+	 */
+	public double[][] multiplyBy(Matrix m) {
+		double[][] otherMatrix = m.getMatrix();
+		if (this.matrix[0].length != otherMatrix.length) { // Multiplying an (m x n)-matrix by an (n x p)-matrix yields a (m x p)-matrix.
+			throw new IllegalArgumentException("Number of columns in matrix 1 != number of rows in matrix 2");
+		}
+		double[][] result = new double[this.matrix.length][otherMatrix[0].length];
+		double value = 0;
+		for (int i = 0; i < result.length; i++) {
+			for (int j = 0; j < result[0].length; j++) {
+				for (int k = 0; k < this.matrix[0].length; k++) {
+					value += this.matrix[i][k] * otherMatrix[k][j];
+				}
+				result[i][j] = value;
+				value = 0;
+			}
+		}
+		return result;
+	}
+	
+	
+	/**
 	 * This prints the given matrix in an easily readable format.
 	 * 
 	 * @param matrix The matrix to print.
