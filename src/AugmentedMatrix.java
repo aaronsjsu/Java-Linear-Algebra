@@ -27,7 +27,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param array The array (row or column) to check.
 	 * @return True if all values in array is zero, else it returns false.
 	 */
-	public boolean arrayIsZero(double[] array) {
+	private boolean arrayIsZero(double[] array) {
 		for (double value : array) {
 			if (value != 0) {
 				return false;
@@ -44,7 +44,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param index The index in the array indicating where to start searching for zeros.
 	 * @return True if the rest of the array is made up of all zeros, otherwise returns false.
 	 */
-	public boolean restOfArrayIsZero(double[] column, int index) {
+	private boolean restOfArrayIsZero(double[] column, int index) {
 		for (int i = index; i < column.length; i++) {
 			if (column[i] != 0) {
 				return false;
@@ -55,34 +55,13 @@ public class AugmentedMatrix extends Matrix {
 	
 	
 	/**
-	 * Checks if a row in a matrix is invalid. This tests if the row is made up of zeros except
-	 * the rightmost value isn't zero. If this is the case, then the method returns false. In linear
-	 * algebra, this is testing if the augmented matrix is inconsistent.
-	 * 
-	 * @param row The row/array from the matrix to test.
-	 * @return True if invalid, false if not invalid.
-	 */
-	public boolean arrayIsInvalid(double[] row) {
-		int numberOfZeros = 0;
-		for (int i = 0; i < row.length; i++) {
-			if (row[i] == 0) {
-				numberOfZeros++;
-			} else if (i == row.length - 1 && numberOfZeros == row.length -1) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	
-	/**
 	 * This moves a row to the bottom of a matrix.
 	 * 
 	 * @param matrix The matrix to perform the operation on.
 	 * @param row The index of the row to move to the bottom.
 	 * @return The changed matrix.
 	 */
-	public double[][] moveRowToBottom(double[][] matrix, int row) {
+	private double[][] moveRowToBottom(double[][] matrix, int row) {
 		if (row >= matrix.length) {
 			throw new IllegalArgumentException("Row does not exist");
 		} else if (row == matrix.length - 1) { // Checks if row is already at the bottom of matrix.
@@ -108,7 +87,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param numberToReduceBy The scale to reduce the row by.
 	 * @return The scaled row.
 	 */
-	public double[] rowScale(double[] row, double numberToReduceBy) {
+	private double[] rowScale(double[] row, double numberToReduceBy) {
 		if (numberToReduceBy == 0) {
 			throw new IllegalArgumentException("Can't reduce/divide by zero");
 		}
@@ -128,7 +107,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param row2 The index of the second row to switch.
 	 * @return The matrix with two rows interchanged.
 	 */
-	public double[][] rowInterchange(double[][] matrix, int row1, int row2) {
+	private double[][] rowInterchange(double[][] matrix, int row1, int row2) {
 		if (row1 >= matrix.length || row2 >= matrix.length) {
 			throw new IllegalArgumentException("Row does not exist");
 		}
@@ -150,7 +129,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param scalar The scalar to be multiplied by the first row.
 	 * @return Returns the edited matrix.
 	 */
-	public double[][] rowAddition(double[][] matrix, int rowX, int rowY, double scalar) {
+	private double[][] rowAddition(double[][] matrix, int rowX, int rowY, double scalar) {
 		if (rowX >= matrix.length || rowY >= matrix.length) { // Checks if rowX/rowY are bigger than matrix size
 			throw new IllegalArgumentException("Row does not exist");
 		}
@@ -232,12 +211,120 @@ public class AugmentedMatrix extends Matrix {
 		return reducedMatrix;
 	}
 	
+
+	/**
+	 * Checks if a row in a matrix is invalid. This tests if the row is made up of zeros except
+	 * the rightmost value isn't zero. If this is the case, then the method returns false. In linear
+	 * algebra, this is testing if the augmented matrix is inconsistent.
+	 * 
+	 * @param row The row/array from the matrix to test.
+	 * @return True if invalid, false if not invalid.
+	 */
+	private boolean arrayIsInvalid(double[] row) {
+		int numberOfZeros = 0;
+		for (int i = 0; i < row.length; i++) {
+			if (row[i] == 0) {
+				numberOfZeros++;
+			} else if (i == row.length - 1 && numberOfZeros == row.length -1) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	/**
+	 * This method checks if an augmented matrix has infinite solutions.
+	 * 
+	 * @return True if it has infinite solutions, false if not.
+	 */
+	public boolean hasInfiniteSolutions() {
+		double[][] matrix = this.getReducedMatrix();
+		int rowsOfZero = 0; // Keeps track of how many rows of zeros there are
+		int countOfNonZeros = 0; // Keeps track of how many non zero numbers are in each row
+		boolean notOneSolution = false; // Keeps track of whether or not there is only one solution
+		for (int i = 0; i < matrix.length; i++) { // Checks each row
+			if (this.arrayIsInvalid(matrix[i])) {
+				return false; // Means there is no solution
+			} else if (this.arrayIsZero(matrix[i])) {
+				rowsOfZero++;
+			} else { // Else make sure each row only has one solution
+				for (int j = 0; j < matrix[0].length; j++) {
+					if (matrix[i][j] != 0 && j != matrix[0].length - 1) {
+						countOfNonZeros++;
+					}
+				}
+			}
+			if (countOfNonZeros > 1) {  // This means that there are more than one non zero values in a row
+				notOneSolution = true;  // which means the matrix has infinite solutions or no solution.
+			}
+			countOfNonZeros = 0; // Reset counter for each row
+		}
+		if (matrix.length - rowsOfZero < matrix[0].length - 1) { // Final check to make sure only one solution per row
+			return true;
+		}
+		return notOneSolution; // Means there is only one solution
+	}
+	
+	
+	/**
+	 * Checks if an augmented matrix has no solution.
+	 * 
+	 * @return True if no solution, false if otherwise.
+	 */
+	public boolean hasNoSolution() {
+		if (this.hasInfiniteSolutions()) {
+			return false;
+		}
+		double[][] matrix = this.getReducedMatrix();
+		for (int i = 0; i < matrix.length; i++) { // Checks each row
+			if (this.arrayIsInvalid(matrix[i])) { // Means there is no solution
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	/**
+	 * Checks if an augmented matrix has only one solution.
+	 * 
+	 * @return True if only one solution, false if otherwise.
+	 */
+	public boolean hasOneSolution() {
+		return !this.hasNoSolution() && !this.hasInfiniteSolutions();
+	}
+	
+	
+	/**
+	 * Checks if an augmented matrix is homogeneous, which means the last column is made up of all zeros.
+	 * 
+	 * @return True if homogeneous, false if not.
+	 */
+	public boolean isHomogeneous() {
+		return this.arrayIsZero(super.getColumn(this.getMatrix(), this.getMatrix()[0].length - 1));
+	}
+
 	
 	/**
 	 * Prints out a reduced matrix in an easily readable format.
 	 */
 	public void printReducedMatrix() {
 		super.printMatrix(this.getReducedMatrix());
+	}
+	
+	
+	/**
+	 * Prints out an evaluation of the matrix, which states how many solutions the augmented matrix has. 
+	 */
+	public void printEvaluation() {
+		if (this.hasInfiniteSolutions()) {
+			System.out.println("System has infinite solutions.");
+		} else if (this.hasNoSolution()) {
+			System.out.println("System has no solution.");
+		} else {
+			System.out.println("System has only one solution.");
+		}
 	}
 	
 }

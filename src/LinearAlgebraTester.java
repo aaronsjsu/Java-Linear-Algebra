@@ -12,7 +12,8 @@ public class LinearAlgebraTester  {
 	
 	public static void main(String[] args) {
 		
-		/*
+		// Tests the getReducedMatris() method. 
+		
 		ArrayList<AugmentedMatrix> augmentedMatrices = new ArrayList<AugmentedMatrix>();
 		ArrayList<Matrix> matrixSolutions = new ArrayList<Matrix>(); // Stores the expected solutions of augmented matrices in above arraylist
 		
@@ -39,10 +40,17 @@ public class LinearAlgebraTester  {
 			augmentedMatrices.get(i).printReducedMatrix();
 			System.out.println("Expected: ");
 			matrixSolutions.get(i).printMatrix();
+			//System.out.println("Is homogeneous: " + augmentedMatrices.get(i).isHomogeneous());
+			//System.out.println("Has Infinite Solutions: " + augmentedMatrices.get(i).hasInfiniteSolutions());
+			//System.out.println("Has No Solution: " + augmentedMatrices.get(i).hasNoSolution());
+			//System.out.println("Has Only One Solution: " + augmentedMatrices.get(i).hasOneSolution());
+			System.out.println("..........");
 		}
-		*/
+		
 		
 
+		// Tests methods in the AugmentedMatrix class, these methods are now private 
+		// because they are only used by the getReducedMatris() method in the AugmentedMatrix class
 		/*
 		AugmentedMatrix matrix1 = new AugmentedMatrix(new double[][] {{1,0,0,0},{0,1,0,0},{0,0,1,0}});
 		
@@ -142,6 +150,7 @@ public class LinearAlgebraTester  {
 		System.out.println("false");
 		*/
 		
+		// Tests the Vector class
 		/*
 		System.out.println("---");
 		// Tests vectors and Matrix multiplyBy() method
@@ -161,8 +170,14 @@ public class LinearAlgebraTester  {
 		v3.printVector(m.multiplyBy(v3));
 		System.out.println("Expected: ");
 		v3.printVector(new double[] {10, 28, 46});
+		ArrayList<Vector> vectors = new ArrayList<>();
+		vectors.add(v1);
+		vectors.add(v2);
+		vectors.add(v3);
+		System.out.println("Linear Independence: " + Vector.isLinearlyIndependent(vectors));
 		*/
 		
+		// Tests the Matrix class
 		/*
 		System.out.println("---");
 		// Tests Matrix multiplyBy() method

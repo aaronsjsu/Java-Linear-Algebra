@@ -15,9 +15,12 @@ public class Example {
 		// Creates an augmented matrix using double[][] array1
 		double[][] array1 = new double[][] {{2,3,4,25}, // Solution set: x1 = 4, x2 = 3, x3 = 2
 											{1,1,2,11},
-											{2,0,3,14}}; // Could be any number of rows/columns long.
+											{2,0,3,14}}; // Could be any number of rows/columns long
 		AugmentedMatrix augMatrix1 = new AugmentedMatrix(array1); // Creates an AugmentedMatrix instance
 		augMatrix1.printReducedMatrix(); // Prints the reduced matrix
+		augMatrix1.printEvaluation(); // Prints how many solutions the matrix has
+		// Or you could check yourself how many solutions there are by using the methods: hasOneSolution(), hasInfiniteSolutions(), hasNoSolution()
+		System.out.println("System has one solution: " + augMatrix1.hasOneSolution());
 		
 		
 		/*
@@ -41,6 +44,15 @@ public class Example {
 		v1.printVector(result); // Prints the result 
 		// Can also multiply matrix by another matrix
 		m1.printMatrix(m1.multiplyBy(new Matrix(new double[][] {{9,8,7},{6,5,4},{3,2,1}}))); // Prints the result
+		
+		
+		// You can also check if a set of vectors is linearly independent: 
+		Vector vector1 = new Vector(new double[] {3, -1});
+		Vector vector2 = new Vector(new double[] {6, -2});
+		ArrayList<Vector> vectors = new ArrayList<>();
+		vectors.add(vector1);
+		vectors.add(vector2);
+		System.out.println(Vector.isLinearlyIndependent(vectors)); // Uses static method isLinearlyIndependent(ArrayList<Vector>)
 		
 	}
 }
