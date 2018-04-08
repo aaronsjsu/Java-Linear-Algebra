@@ -159,6 +159,23 @@ public class Matrix {
 	
 	
 	/**
+	 * Returns the transpose of a matrix, which simply means that each row
+	 * in the matrix is rotated to become a column, and that is the matrix's transpose.
+	 * 
+	 * @return The resulting matrix as a double[][].
+	 */
+	public double[][] getTranspose() {
+		double[][] matrix = this.getMatrix();
+		double[][] result = new double[matrix[0].length][matrix.length];
+		for (int i = 0; i < result.length; i++) {
+			for (int j = 0; j < result[0].length; j++) {
+				result[i][j] = matrix[j][i]; // Transposes...
+			}
+		}
+		return result;
+	}
+	
+	/**
 	 * This prints the given matrix in an easily readable format.
 	 * 
 	 * @param matrix The matrix to print.

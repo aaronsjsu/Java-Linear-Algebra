@@ -44,7 +44,9 @@ public class Example {
 		v1.printVector(result); // Prints the result 
 		// Can also multiply matrix by another matrix
 		m1.printMatrix(m1.multiplyBy(new Matrix(new double[][] {{9,8,7},{6,5,4},{3,2,1}}))); // Prints the result
-		
+		// Can also get the transpose of a matrix
+		System.out.println("Transpose:");
+		m1.printMatrix(m1.getTranspose());
 		
 		// You can also check if a set of vectors is linearly independent: 
 		Vector vector1 = new Vector(new double[] {3, -1});
@@ -52,7 +54,7 @@ public class Example {
 		ArrayList<Vector> vectors = new ArrayList<>();
 		vectors.add(vector1);
 		vectors.add(vector2);
-		System.out.println(Vector.isLinearlyIndependent(vectors)); // Uses static method isLinearlyIndependent(ArrayList<Vector>)
+		System.out.println("Is linearly independent: " + Vector.isLinearlyIndependent(vectors)); // Uses static method isLinearlyIndependent(ArrayList<Vector>)
 		
 	}
 }

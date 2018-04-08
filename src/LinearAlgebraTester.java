@@ -13,7 +13,7 @@ public class LinearAlgebraTester  {
 	public static void main(String[] args) {
 		
 		// Tests the getReducedMatris() method. 
-		
+		/*
 		ArrayList<AugmentedMatrix> augmentedMatrices = new ArrayList<AugmentedMatrix>();
 		ArrayList<Matrix> matrixSolutions = new ArrayList<Matrix>(); // Stores the expected solutions of augmented matrices in above arraylist
 		
@@ -46,7 +46,7 @@ public class LinearAlgebraTester  {
 			//System.out.println("Has Only One Solution: " + augmentedMatrices.get(i).hasOneSolution());
 			System.out.println("..........");
 		}
-		
+		*/
 		
 
 		// Tests methods in the AugmentedMatrix class, these methods are now private 
@@ -193,6 +193,17 @@ public class LinearAlgebraTester  {
 		m1.printMatrix(m1.multiplyBy(m2));
 		System.out.println("Expected: ");
 		m1.printMatrix(new double[][] {{-2,-4},{5,-7}});
+		// Tests transpose()
+		m1 = new Matrix(new double[][] {{5,4},{4,0},{7,10},{-1,8}});
+		System.out.println("Got:");
+		m1.printMatrix(m1.getTranspose());
+		System.out.println("Expected:");
+		m1.printMatrix(new double[][] {{5,4,7,-1},{4,0,10,8}});
+		m2 = new Matrix(new double[][] {{1,2,0},{-1,3,4}});
+		System.out.println("Got:");
+		m2.printMatrix(m2.getTranspose());
+		System.out.println("Expected:");
+		m2.printMatrix(new double[][] {{1,-1},{2,3},{0,4}});
 		*/
 	}	
 }
