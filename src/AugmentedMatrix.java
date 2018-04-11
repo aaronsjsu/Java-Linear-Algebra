@@ -27,7 +27,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param array The array (row or column) to check.
 	 * @return True if all values in array is zero, else it returns false.
 	 */
-	private boolean arrayIsZero(double[] array) {
+	protected boolean arrayIsZero(double[] array) {
 		for (double value : array) {
 			if (value != 0) {
 				return false;
@@ -44,7 +44,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param index The index in the array indicating where to start searching for zeros.
 	 * @return True if the rest of the array is made up of all zeros, otherwise returns false.
 	 */
-	private boolean restOfArrayIsZero(double[] column, int index) {
+	protected boolean restOfArrayIsZero(double[] column, int index) {
 		for (int i = index; i < column.length; i++) {
 			if (column[i] != 0) {
 				return false;
@@ -61,7 +61,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param row The index of the row to move to the bottom.
 	 * @return The changed matrix.
 	 */
-	private double[][] moveRowToBottom(double[][] matrix, int row) {
+	protected double[][] moveRowToBottom(double[][] matrix, int row) {
 		if (row >= matrix.length) {
 			throw new IllegalArgumentException("Row does not exist");
 		} else if (row == matrix.length - 1) { // Checks if row is already at the bottom of matrix.
@@ -87,7 +87,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param numberToReduceBy The scale to reduce the row by.
 	 * @return The scaled row.
 	 */
-	private double[] rowScale(double[] row, double numberToReduceBy) {
+	protected double[] rowScale(double[] row, double numberToReduceBy) {
 		if (numberToReduceBy == 0) {
 			throw new IllegalArgumentException("Can't reduce/divide by zero");
 		}
@@ -107,7 +107,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param row2 The index of the second row to switch.
 	 * @return The matrix with two rows interchanged.
 	 */
-	private double[][] rowInterchange(double[][] matrix, int row1, int row2) {
+	protected double[][] rowInterchange(double[][] matrix, int row1, int row2) {
 		if (row1 >= matrix.length || row2 >= matrix.length) {
 			throw new IllegalArgumentException("Row does not exist");
 		}
@@ -129,7 +129,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param scalar The scalar to be multiplied by the first row.
 	 * @return Returns the edited matrix.
 	 */
-	private double[][] rowAddition(double[][] matrix, int rowX, int rowY, double scalar) {
+	protected double[][] rowAddition(double[][] matrix, int rowX, int rowY, double scalar) {
 		if (rowX >= matrix.length || rowY >= matrix.length) { // Checks if rowX/rowY are bigger than matrix size
 			throw new IllegalArgumentException("Row does not exist");
 		}
@@ -172,23 +172,27 @@ public class AugmentedMatrix extends Matrix {
 				if (i == j + nonPivotColumns) { // Handles a pivot coordinate
 					if (value != 0) { // Handles a found pivot
 						reducedMatrix[j] = this.rowScale(row, value); // Replaces row with edited row
-						for (int k = 0; k < j; k++) { // Now that the pivot value is found, make all values above it in the column equal zero
+						// Now that the pivot value is found, make all values above it in the column equal zero
+						for (int k = 0; k < j; k++) {
 							double currentValue = reducedMatrix[k][i];
 							if (currentValue != 0) { // Makes value equal to zero if not already
-								reducedMatrix = this.rowAddition(reducedMatrix, j, k, -currentValue); // Adds pivot row to make value equal zero
+								// Add pivot row to make value equal zero
+								reducedMatrix = this.rowAddition(reducedMatrix, j, k, -currentValue);
 							}
 						}
 					} else {
 						for (int k = j; k < column.length; k++) {
 							if (column[k] != 0) { // Find next non zero value in column
-								reducedMatrix = this.rowInterchange(reducedMatrix, j, k); // Switch current row with row with non zero value
+								// Switch current row with row with non zero value
+								reducedMatrix = this.rowInterchange(reducedMatrix, j, k);
 								j -= 1; // Return to same row on next loop
 							}
 						}
 					}
 				} else if (i < j + nonPivotColumns) { // Handles values below the pivot in the column
 					if (value != 0) { // Makes value equal to zero if not already
-						reducedMatrix = this.rowAddition(reducedMatrix, i + nonPivotColumns, j, -value); // Adds pivot row to current row to make value equal zero
+						// Add pivot row to current row to make value equal zero
+						reducedMatrix = this.rowAddition(reducedMatrix, i + nonPivotColumns, j, -value);
 					}
 				}
 			}
@@ -196,7 +200,8 @@ public class AugmentedMatrix extends Matrix {
 		
 		for (int i = 0; i < reducedMatrix.length; i++) { // This is to move all rows of zeros to the bottom
 			for (int j = 0; j < reducedMatrix[0].length; j++) { // This is to get rid of -0.0 in the matrix
-				if (Math.abs(reducedMatrix[i][j]) < .0000001) { // Gets rid of -0.0 and very small values (less than .0000001)
+				// Get rid of negative zero values (-0.0) and very small values (less than .0000001)
+				if (Math.abs(reducedMatrix[i][j]) < .0000001) {
 					reducedMatrix[i][j] = 0; 
 				}
 			}
@@ -220,7 +225,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param row The row/array from the matrix to test.
 	 * @return True if invalid, false if not invalid.
 	 */
-	private boolean arrayIsInvalid(double[] row) {
+	protected boolean arrayIsInvalid(double[] row) {
 		int numberOfZeros = 0;
 		for (int i = 0; i < row.length; i++) {
 			if (row[i] == 0) {
