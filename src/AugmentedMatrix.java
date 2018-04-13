@@ -27,7 +27,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param array The array (row or column) to check.
 	 * @return True if all values in array is zero, else it returns false.
 	 */
-	protected boolean arrayIsZero(double[] array) {
+	private boolean arrayIsZero(double[] array) {
 		for (double value : array) {
 			if (value != 0) {
 				return false;
@@ -44,7 +44,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param index The index in the array indicating where to start searching for zeros.
 	 * @return True if the rest of the array is made up of all zeros, otherwise returns false.
 	 */
-	protected boolean restOfArrayIsZero(double[] column, int index) {
+	private boolean restOfArrayIsZero(double[] column, int index) {
 		for (int i = index; i < column.length; i++) {
 			if (column[i] != 0) {
 				return false;
@@ -61,7 +61,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param row The index of the row to move to the bottom.
 	 * @return The changed matrix.
 	 */
-	protected double[][] moveRowToBottom(double[][] matrix, int row) {
+	private double[][] moveRowToBottom(double[][] matrix, int row) {
 		if (row >= matrix.length) {
 			throw new IllegalArgumentException("Row does not exist");
 		} else if (row == matrix.length - 1) { // Checks if row is already at the bottom of matrix.
@@ -87,7 +87,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param numberToReduceBy The scale to reduce the row by.
 	 * @return The scaled row.
 	 */
-	protected double[] rowScale(double[] row, double numberToReduceBy) {
+	private double[] rowScale(double[] row, double numberToReduceBy) {
 		if (numberToReduceBy == 0) {
 			throw new IllegalArgumentException("Can't reduce/divide by zero");
 		}
@@ -107,7 +107,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param row2 The index of the second row to switch.
 	 * @return The matrix with two rows interchanged.
 	 */
-	protected double[][] rowInterchange(double[][] matrix, int row1, int row2) {
+	private double[][] rowInterchange(double[][] matrix, int row1, int row2) {
 		if (row1 >= matrix.length || row2 >= matrix.length) {
 			throw new IllegalArgumentException("Row does not exist");
 		}
@@ -129,7 +129,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param scalar The scalar to be multiplied by the first row.
 	 * @return Returns the edited matrix.
 	 */
-	protected double[][] rowAddition(double[][] matrix, int rowX, int rowY, double scalar) {
+	private double[][] rowAddition(double[][] matrix, int rowX, int rowY, double scalar) {
 		if (rowX >= matrix.length || rowY >= matrix.length) { // Checks if rowX/rowY are bigger than matrix size
 			throw new IllegalArgumentException("Row does not exist");
 		}
@@ -225,7 +225,7 @@ public class AugmentedMatrix extends Matrix {
 	 * @param row The row/array from the matrix to test.
 	 * @return True if invalid, false if not invalid.
 	 */
-	protected boolean arrayIsInvalid(double[] row) {
+	private boolean arrayIsInvalid(double[] row) {
 		int numberOfZeros = 0;
 		for (int i = 0; i < row.length; i++) {
 			if (row[i] == 0) {
