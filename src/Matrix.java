@@ -140,7 +140,9 @@ public class Matrix {
 	 */
 	public double[][] multiplyBy(Matrix m) {
 		double[][] otherMatrix = m.getMatrix();
-		if (this.matrix[0].length != otherMatrix.length) { // Multiplying an (m x n)-matrix by an (n x p)-matrix yields a (m x p)-matrix.
+		// Multiplying an (m x n)-matrix by an (n x p)-matrix yields a (m x p)-matrix. Check to 
+		// make sure that is the case.
+		if (this.matrix[0].length != otherMatrix.length) {
 			throw new IllegalArgumentException("Number of columns in matrix 1 != number of rows in matrix 2");
 		}
 		double[][] result = new double[this.matrix.length][otherMatrix[0].length];
@@ -174,6 +176,7 @@ public class Matrix {
 		}
 		return result;
 	}
+	
 	
 	/**
 	 * This prints the given matrix in an easily readable format.

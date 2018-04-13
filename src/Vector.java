@@ -93,7 +93,8 @@ public class Vector {
 			}
 		}
 		AugmentedMatrix augMatrix = new AugmentedMatrix(matrix);
-		if (augMatrix.hasInfiniteSolutions()) { // Checks if augMatrix has infinite solutions (which means not linearly independent)
+		// Check if augMatrix has infinite solutions (which means not linearly independent)
+		if (augMatrix.hasInfiniteSolutions()) {
 			return false;
 		}
 		return true;
