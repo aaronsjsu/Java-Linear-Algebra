@@ -19,7 +19,8 @@ public class Example {
 		AugmentedMatrix augMatrix1 = new AugmentedMatrix(array1); // Creates an AugmentedMatrix instance
 		augMatrix1.printReducedMatrix(); // Prints the reduced matrix
 		augMatrix1.printEvaluation(); // Prints how many solutions the matrix has
-		// Or you could check yourself how many solutions there are by using the methods: hasOneSolution(), hasInfiniteSolutions(), hasNoSolution()
+		// Or you could check yourself how many solutions there are by using the methods: 
+		// hasOneSolution(), hasInfiniteSolutions(), hasNoSolution()
 		System.out.println("System has one solution: " + augMatrix1.hasOneSolution());
 		
 		
@@ -54,7 +55,12 @@ public class Example {
 		ArrayList<Vector> vectors = new ArrayList<>();
 		vectors.add(vector1);
 		vectors.add(vector2);
-		System.out.println("Is linearly independent: " + Vector.isLinearlyIndependent(vectors)); // Uses static method isLinearlyIndependent(ArrayList<Vector>)
+		// Use static method isLinearlyIndependent(ArrayList<Vector>)
+		System.out.println("Is linearly independent: " + Vector.isLinearlyIndependent(vectors));
 		
+		
+		// If you want to find the determinant of a square matrix:
+		SquareMatrix sm = new SquareMatrix(new double[][] {{2,4,1},{3,-2,9},{1,0,6}});
+		System.out.println("Determinant: " + sm.getDeterminant());
 	}
 }

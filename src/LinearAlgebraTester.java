@@ -15,14 +15,18 @@ public class LinearAlgebraTester  {
 		// Tests the getReducedMatris() method. 
 		/*
 		ArrayList<AugmentedMatrix> augmentedMatrices = new ArrayList<AugmentedMatrix>();
-		ArrayList<Matrix> matrixSolutions = new ArrayList<Matrix>(); // Stores the expected solutions of augmented matrices in above arraylist
+		// Store the expected solutions of augmented matrices in arraylist
+		ArrayList<Matrix> matrixSolutions = new ArrayList<Matrix>(); 
 		
 		// Add some test cases
-		augmentedMatrices.add(new AugmentedMatrix(new double[][] {{2,3,4,25},{1,1,2,11},{2,0,3,14}})); // x1 = 4, x2 = 3, x3 = 2
+		augmentedMatrices.add(new AugmentedMatrix(
+			new double[][] {{2,3,4,25},{1,1,2,11},{2,0,3,14}})); // x1 = 4, x2 = 3, x3 = 2
 		matrixSolutions.add(new Matrix(new double[][] {{1,0,0,4},{0,1,0,3},{0,0,1,2}}));
-		augmentedMatrices.add(new AugmentedMatrix(new double[][] {{1,2,3,11},{0,2,-1,8},{8,6,-2,-14},{1,2,-2,1}})); // x1 = -5, x2 = 5, x3 = 2
+		augmentedMatrices.add(new AugmentedMatrix(
+			new double[][] {{1,2,3,11},{0,2,-1,8},{8,6,-2,-14},{1,2,-2,1}})); // x1 = -5, x2 = 5, x3 = 2
 		matrixSolutions.add(new Matrix(new double[][] {{1,0,0,-5},{0,1,0,5},{0,0,1,2},{0,0,0,0}}));
-		augmentedMatrices.add(new AugmentedMatrix(new double[][] {{0,0,0,0},{0,2,-1,-10},{0,6,2,0},{1,2,3,14}})); // x1 = 0, x2 = -2, x3 = 6
+		augmentedMatrices.add(new AugmentedMatrix(
+			new double[][] {{0,0,0,0},{0,2,-1,-10},{0,6,2,0},{1,2,3,14}})); // x1 = 0, x2 = -2, x3 = 6
 		matrixSolutions.add(new Matrix(new double[][] {{1,0,0,0},{0,1,0,-2},{0,0,1,6},{0,0,0,0}}));
 		augmentedMatrices.add(new AugmentedMatrix(new double[][] {{0,2,-1,4},{0,6,2,2},{0,2,3,-4}})); // x2 = 1, x3 = -2
 		matrixSolutions.add(new Matrix(new double[][] {{0,1,0,1},{0,0,1,-2},{0,0,0,0}}));
@@ -49,7 +53,7 @@ public class LinearAlgebraTester  {
 		*/
 		
 
-		// Tests methods in the AugmentedMatrix class, these methods are now private 
+		// Tests methods in the AugmentedMatrix class, these methods are now private instead of public 
 		// because they are only used by the getReducedMatris() method in the AugmentedMatrix class
 		/*
 		AugmentedMatrix matrix1 = new AugmentedMatrix(new double[][] {{1,0,0,0},{0,1,0,0},{0,0,1,0}});
@@ -204,6 +208,20 @@ public class LinearAlgebraTester  {
 		m2.printMatrix(m2.getTranspose());
 		System.out.println("Expected:");
 		m2.printMatrix(new double[][] {{1,-1},{2,3},{0,4}});
+		*/
+		
+		/*
+		// Test the SquareMatrix class
+		SquareMatrix sm1 = new SquareMatrix(new double[][] {{0}}); // determinant = 0
+		SquareMatrix sm2 = new SquareMatrix(new double[][] {{2,1},{5,-2}}); // determinant = -9
+		SquareMatrix sm3 = new SquareMatrix(new double[][] {{6,1,1},{4,-2,5},{2,8,7}}); // determinant = -306
+		SquareMatrix sm5 = new SquareMatrix(new double[][] {{1,2,3,1,2},{1,1,5,3,8},{6,2,6,2,0},
+															{3,4,8,2,2},{4,3,9,1,1}}); // determinant = 0
+		System.out.println("Testing getDeterminant()");
+		System.out.println(sm1.getDeterminant() + " expected: 0");
+		System.out.println(sm2.getDeterminant() + " expected: -9");
+		System.out.println(sm3.getDeterminant() + " expected: -306");
+		System.out.println(sm5.getDeterminant() + " expected: -184");
 		*/
 	}	
 }
