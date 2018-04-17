@@ -1,6 +1,7 @@
 package linear_algebra;
 
 import java.util.Arrays;
+import java.text.DecimalFormat;
 
 /**
  * This class models a mathematical matrix using a 2d array 
@@ -109,6 +110,23 @@ public class Matrix {
 	
 	
 	/**
+	 * This multiplies the matrix by a scalar, and returns the resulting matrix as a double[][].
+	 * 
+	 * @param scalar The scalar to multiply the matrix by.
+	 * @return The resulting matrix as a double[][].
+	 */
+	public double[][] multiplyBy(double scalar) {
+		double[][] result = new double[this.matrix.length][this.matrix[0].length];
+		for (int i = 0; i < result.length; i++) {
+			for (int j = 0; j < result[0].length; j++) {
+				result[i][j] = this.getMatrix()[i][j] * scalar;
+			}
+		}
+		return result;
+	}
+	
+	
+	/**
 	 * This multiplies the matrix by a vector, and returns the resulting vector as a double[].
 	 * 
 	 * @param v Vector to multiply by the matrix.
@@ -179,14 +197,41 @@ public class Matrix {
 	
 	
 	/**
+	 * This method takes a double[][] and rounds each value to four decimal places.
+	 * This also eliminates values that equal -0.0, and sets it to positive zero.
+	 * 
+	 * @param matrix The double[][] to round the values of.
+	 * @return The double[][] with rounded values.
+	 */
+	public double[][] roundMatrix(double[][] matrix) {
+		double[][] result = new double[matrix.length][matrix[0].length];
+		for (int i = 0; i < result.length; i++) {
+			for (int j = 0; j < result[0].length; j++) {
+				if (Math.abs(matrix[i][j]) < .00001) { // Eliminates -0.0 values
+					result[i][j] = 0;
+				} else { // Else round each value
+					result[i][j] = Math.round(matrix[i][j] * 10000.0) / 10000.0;
+				}
+			}
+		}
+		return result;
+	}
+	
+	
+	/**
 	 * This prints the given matrix in an easily readable format.
 	 * 
 	 * @param matrix The matrix to print.
 	 */
 	public void printMatrix(double[][] matrix) {
 		System.out.println(" ----- ");
-		for (int i = 0; i < matrix.length; i++) {
-			System.out.println(Arrays.toString(matrix[i]));
+		if (matrix == null) {
+			System.out.println("[null]");
+		} else {
+			matrix = this.roundMatrix(matrix);
+			for (int i = 0; i < matrix.length; i++) {
+				System.out.println(Arrays.toString(matrix[i]));
+			}
 		}
 		System.out.println(" ----- ");
 	}

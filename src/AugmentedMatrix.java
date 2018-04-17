@@ -197,14 +197,8 @@ public class AugmentedMatrix extends Matrix {
 				}
 			}
 		}
-		
+		reducedMatrix = super.roundMatrix(reducedMatrix); // Need to round values before checking for rows of zero
 		for (int i = 0; i < reducedMatrix.length; i++) { // This is to move all rows of zeros to the bottom
-			for (int j = 0; j < reducedMatrix[0].length; j++) { // This is to get rid of -0.0 in the matrix
-				// Get rid of negative zero values (-0.0) and very small values (less than .0000001)
-				if (Math.abs(reducedMatrix[i][j]) < .0000001) {
-					reducedMatrix[i][j] = 0; 
-				}
-			}
 			double[] row = super.getRow(reducedMatrix, i);
 			if (this.arrayIsZero(row) && i <= reducedMatrix.length - 1 - rowsOfZero) {
 				reducedMatrix = this.moveRowToBottom(reducedMatrix, i);
