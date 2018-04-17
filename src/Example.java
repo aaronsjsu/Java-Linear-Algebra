@@ -14,9 +14,8 @@ public class Example {
 		
 		// ----- Deals with augmented matrices -----
 		// Create an augmented matrix using a double[][] 
-		double[][] array1 = new double[][] {{2,3,4,25}, // Solution set: x1 = 4, x2 = 3, x3 = 2
-											{1,1,2,11},
-											{2,0,3,14}}; // Could be any number of rows/columns long
+		double[][] array1 = new double[][] {{2,3,4,25},{1,1,2,11},{2,0,3,14}};
+		// Could be any number of rows/columns long. Solution set: x1 = 4, x2 = 3, x3 = 2
 		AugmentedMatrix augMatrix1 = new AugmentedMatrix(array1); // Creates an AugmentedMatrix instance
 		// Reduce the augmented matrix to reduced row echelon form:
 		double[][] reducedMatrix = augMatrix1.getReducedMatrix();
@@ -42,9 +41,7 @@ public class Example {
 		
 		// ----- Deals with column vectors -----
 		// Create a vector using double[]
-		double[] array2 = new double[] {1, 
-										2,
-										3};
+		double[] array2 = new double[] {1, 2, 3};
 		Vector v1 = new Vector(array2); // Creates a Vector instance
 		Matrix m1 = new Matrix(new double[][] {{1,2,3},{4,5,6},{7,8,9}}); // Creates a matrix instance
 		double[] result = m1.multiplyBy(v1); // Multiplies the matrix by the vector, stores the answer in a double[]
