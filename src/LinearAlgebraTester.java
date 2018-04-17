@@ -222,6 +222,33 @@ public class LinearAlgebraTester  {
 		System.out.println(sm2.getDeterminant() + " expected: -9");
 		System.out.println(sm3.getDeterminant() + " expected: -306");
 		System.out.println(sm5.getDeterminant() + " expected: -184");
+		
+		System.out.println("-----");
+		System.out.println("Testing getMatrixOfCofactors()");
+		sm1.printMatrix(sm1.getMatrixOfCofactors());
+		sm2.printMatrix(sm2.getMatrixOfCofactors());
+		System.out.println("Expected: ");
+		sm1.printMatrix(new double[][] {{-2,-5},{-1,2}});
+		sm3.printMatrix(sm3.getMatrixOfCofactors());
+		System.out.println("Expected: ");
+		sm1.printMatrix(new double[][] {{-54,-18,36},{1,40,-46},{7,-26,-16}});
+		sm5.printMatrix(sm5.getMatrixOfCofactors());
+		System.out.println("Expected: ");
+		sm1.printMatrix(new double[][] {{-152,-200,116,308,-144},{12,40,-14,-34,-8},{-46,0,23,-23,0},
+										{120,32,-48,-248,104},{-32,16,-24,152,-40}});
+
+		System.out.println("-----");
+		System.out.println("Testing getInverse()");
+		sm2.printMatrix(sm2.multiplyBy(new Matrix(sm2.getInverse())));
+		System.out.println("Expected: ");
+		sm1.printMatrix(new double[][] {{1,0},{0,1}}); // are signs right?
+		sm3.printMatrix(sm3.multiplyBy(new Matrix(sm3.getInverse())));
+		System.out.println("Expected: ");
+		sm1.printMatrix(new double[][] {{1,0,0},{0,1,0},{0,0,1}});
+		sm5.printMatrix(sm5.multiplyBy(new Matrix(sm5.getInverse())));
+		System.out.println("Expected: ");
+		sm1.printMatrix(new double[][] {{1,0,0,0,0},{0,1,0,0,0},{0,0,1,0,0},{0,0,0,1,0},{0,0,0,0,1}});
 		*/
+		
 	}	
 }

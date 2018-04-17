@@ -70,8 +70,89 @@ public class SquareMatrix extends Matrix {
 	}
 	
 	
-	// TODO
-	public SquareMatrix getInverse() {
-		return null;
+	/**
+	 * This calculates and returns a matrix of minors. A matrix of minors is basically a
+	 * matrix made up of determinates of inner matrices within the original matrix.
+	 * 
+	 * @return The matrix of minors as a double[][].
+	 */
+	public double[][] getMatrixOfMinors() {
+		double[][] matrix = this.getMatrix();
+		int size = matrix.length;
+		double[][] matrixOfMinors = new double[size][size];
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				// These first two loops (i and j) are to fill the matrixOfMinors.
+				// The next two loops (k and c) are to fill the innerMatrix.
+				double[][] innerMatrix = new double[size - 1][size - 1];
+				for (int k = 0; k < size; k++) {
+					for (int c = 0; c < size; c++) {
+						// We don't want the column or the row of matrix[i][j] in our innerMatrix,
+						// so when k == i, we don't do anything, and in other cases, we adjust
+						// values to fill the innerMatrix correctly. Note that i and j represent 
+						// the matrixOfMinors's rows and columns respectively, and k and c represent
+						// the innerMatrix's rows and columns respectively.
+						if (k < i && c < j) {
+							innerMatrix[k][c] = matrix[k][c];
+						} else if (k < i && c > j) {
+							innerMatrix[k][c - 1] = matrix[k][c];
+						} else if (k > i && c < j) {
+							innerMatrix[k - 1][c] = matrix[k][c];
+						} else if (k > i && c > j) {
+							innerMatrix[k - 1][c - 1] = matrix[k][c];
+						}
+					}
+				matrixOfMinors[i][j] = this.getDeterminant(innerMatrix);
+				}
+			}
+		}
+		return matrixOfMinors;
 	}
+	
+	
+	/**
+	 * Calculates and returns a matrix of cofactors. This is essentially a matrix of minors,
+	 * but certain values in the matrix are switched to negative, or positive if already negative.
+	 * 
+	 * @return The matrix of cofactors as a double[][].
+	 */
+	public double[][] getMatrixOfCofactors() {
+		double[][] matrix = this.getMatrixOfMinors();
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix.length; j++) {
+				// Use Math.pow() to decide which values become negative.
+				matrix[i][j] = Math.pow(-1, i + j) * matrix[i][j];
+			}
+		}
+		return matrix;
+	}
+	
+	
+	/**
+	 * Calculates and returns the adjoint of a matrix. This is essentially a transposed
+	 * matrix of cofactors. 
+	 * 
+	 * @return The adjoint of a matrix.
+	 */
+	public double[][] getAdjoint() {
+		return new SquareMatrix(this.getMatrixOfCofactors()).getTranspose();
+	}
+	
+
+	/**
+	 * Calculates and returns the inverse of a square matrix. It does this by multiplying
+	 * the adjoint by 1/determinant, which will equal the inverse as long as the determinant
+	 * is not equal to 0. 
+	 * 
+	 * @return The inverse of a matrix.
+	 */
+	public double[][] getInverse() {
+		double determinant = this.getDeterminant();
+		// If determinant is zero, inverse does not exist.
+		if (determinant == 0) {
+			return null;
+		}
+		return new SquareMatrix(this.getAdjoint()).multiplyBy(1/determinant);
+	}
+
 }
